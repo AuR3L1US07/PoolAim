@@ -1,55 +1,108 @@
-﻿# PoolAim 台球瞄准辅助
+<div align="center">
 
-Windows x86 Poolians / Real Pool 3D 的瞄准辅助。运行根目录的 `PoolAim.exe`，进入游戏练习模式后点击“加载辅助”。单文件启动器内置插件、加载器、配置和 MinHook 许可证。
+# 🎱 PoolAim
 
-插件读取球坐标与相机矩阵，绘制精简的碰撞、反弹和传球预测路线。绿色高亮表示几何预测可进球；橙色表示极薄碰撞对误差敏感。预测不包含完整的力度、旋转和摩擦，不能保证进球。
+**Poolians / Real Pool 3D 台球几何瞄准辅助**
 
-| 按键 | 功能 |
-|---|---|
-| Insert | 显示／隐藏 |
-| F5 | 重新识别球 |
-| F6 | 切换反弹次数 |
-| F7 | 切换白球编号 |
-| F8 | 显示球编号 |
-| F9 / F10 | 切换参考目标球／袋口 |
-| F11 | 显示参考线 |
-| + / - | 调整线宽 |
+看清碰撞 · 预览反弹 · 判断薄切
 
-更新或移除已加载的插件，需要完全退出游戏。当前版本不包含自动开球和回合判断。
+![版本](https://img.shields.io/badge/version-0.4.6-34c9a5?style=flat-square)
+![平台](https://img.shields.io/badge/platform-Windows_x86-0078D4?style=flat-square)
+![界面](https://img.shields.io/badge/UI-简体中文-34c9a5?style=flat-square)
+![分发](https://img.shields.io/badge/package-单文件_EXE-526477?style=flat-square)
 
-## 构建
+[**⬇️ 下载最新版**](https://github.com/AuR3L1US07/PoolAim/releases/latest) · [快速开始](#-快速开始) · [效果预览](#-效果预览) · [源码构建](#-源码构建)
 
-在项目根目录运行：
+</div>
 
-```powershell
-powershell -NoProfile -ExecutionPolicy Bypass -File plugin/build.ps1
-powershell -NoProfile -ExecutionPolicy Bypass -File plugin/package/build-single.ps1
-```
+---
 
-第一步编译 DLL、加载器并运行几何测试；第二步生成根目录 `PoolAim.exe`。构建使用 `plugin/vendor/toolchain` 中的 x86 工具链；MinHook 源码及许可证保留在 `plugin/vendor/minhook`。桌面尺寸配置为 `plugin/PoolAim.ini`。
+## ✨ 功能一览
 
-源码：`plugin/src`；测试：`plugin/tests`。`plugin/build` 和 `plugin/dist` 是可重新生成的构建目录。
+| 功能 | 说明 |
+| :--- | :--- |
+| 🎯 瞄准预览 | 读取球坐标与相机矩阵，绘制精简路线 |
+| ↪️ 碰撞与反弹 | 预览目标球、传球及碰撞后白球的几何路线 |
+| 💚 进球高亮 | 几何模型预测可进球时，突出显示路线与袋口 |
+| 🔶 薄切提示 | 双精度碰撞计算；极薄碰撞使用橙色提示 |
+| 🇨🇳 中文面板 | 中文启动界面、状态信息与快捷键说明 |
+| 📦 单文件启动 | EXE 内置插件、加载器、配置与 MinHook 许可证 |
 
-## 界面与效果
+> **预测范围**：路线未包含完整力度、旋转与摩擦，绿色高亮不代表保证进球。当前版本不包含自动开球或回合判断。
+
+## 🚀 快速开始
+
+1. 在 [Releases](https://github.com/AuR3L1US07/PoolAim/releases/latest) 下载 **PoolAim.exe**。
+2. 打开 Poolians，进入 **8 球练习模式**。
+3. 运行启动器，点击 **加载辅助**，回到游戏查看路线。
+
+**更新／移除**：完全退出游戏后重新打开。仅关闭启动器或隐藏路线不会卸载已加载的 DLL。
+
+下载页同时提供 `SHA256SUMS.txt`，用于核对 EXE 的 SHA-256 校验值。
+
+## 🖼️ 效果预览
+
+### 游戏内瞄准与进球高亮
+
+![游戏内瞄准路线与绿色进球预测高亮](images/aim-preview.png)
+
+**青色**：白球路线　·　**黄色**：碰撞后路线　·　**绿色**：预测可进　·　**橙色**：极薄碰撞
 
 ### 中文启动界面
 
-![PoolAim 中文启动界面](images/launcher.png)
+<img src="images/launcher.png" alt="PoolAim 中文启动界面" width="445">
 
-### 游戏内路线与进球预测高亮
+<details>
+<summary><strong>查看中文状态面板</strong></summary>
 
-![游戏内瞄准路线和绿色预测高亮](images/aim-preview.png)
+<br>
+<img src="images/chinese-panel.png" alt="中文状态面板与快捷键" width="320">
 
-绿色表示当前几何模型预测可进，实际结果仍受力度、旋转和模型误差影响。
+</details>
 
-### 中文状态面板
+## ⌨️ 快捷键
 
-![中文状态面板与快捷键](images/chinese-panel.png)
+| 按键 | 操作 |
+| :---: | :--- |
+| `Insert` | 显示／隐藏辅助 |
+| `F5` | 重新识别球 |
+| `F6` | 切换反弹次数 |
+| `F7` | 切换白球编号 |
+| `F8` | 显示／隐藏球编号 |
+| `F9` / `F10` | 切换参考目标球／袋口 |
+| `F11` | 显示／隐藏参考线 |
+| `+` / `-` | 调整线宽 |
 
-## 下载与使用范围
+## 🛠️ 源码构建
 
-在 [Releases](https://github.com/AuR3L1US07/PoolAim/releases) 下载 `PoolAim.exe`。无需安装工具链；更新前完全退出游戏。
+普通使用只需下载 EXE。自行构建需要 **Windows + x86 w64devkit 2.10.0**。
 
-建议用于练习和几何学习。程序使用 DLL 注入与绘图挂接，只针对 Poolians.exe；其他游戏的反作弊兼容性未验证，请勿与带反作弊的游戏同时运行。
+从官方 [w64devkit Release](https://github.com/skeeto/w64devkit/releases/tag/v2.10.0) 获取 x86 包，将 `w64devkit` 文件夹放到 `plugin/vendor/toolchain/` 下。源码仓库不包含大型工具链。
 
-源码仓库不包含大型编译工具链。需要自行构建时，请从官方 [w64devkit](https://github.com/skeeto/w64devkit/releases/tag/v2.10.0) 获取 2.10.0 的 x86 包，将其中 w64devkit 文件夹放在 `plugin/vendor/toolchain/` 下，或通过 build.ps1 的 CompilerBin 参数指定编译器目录。
+在项目根目录执行：
+
+```powershell
+# 编译插件与加载器，并运行几何测试
+powershell -NoProfile -ExecutionPolicy Bypass -File plugin/build.ps1
+
+# 打包为根目录的 PoolAim.exe
+powershell -NoProfile -ExecutionPolicy Bypass -File plugin/package/build-single.ps1
+```
+
+| 路径 | 内容 |
+| :--- | :--- |
+| [`plugin/src`](plugin/src) | 插件、几何计算、中文面板与启动器 |
+| [`plugin/tests`](plugin/tests) | 薄切、相切、反弹与进袋几何测试 |
+| [`plugin/PoolAim.ini`](plugin/PoolAim.ini) | 桌面尺寸配置 |
+| [`plugin/vendor/minhook`](plugin/vendor/minhook) | MinHook 源码与许可证 |
+| `plugin/build` / `plugin/dist` | 可重新生成的构建产物 |
+
+更详细的源码说明见 [插件开发文档](plugin/README.md)。
+
+## 📌 使用范围与限制
+
+- 面向 Poolians / Real Pool 3D 的 Windows x86 版本，建议用于练习与几何学习。
+- 球桌尺寸、相机方向及 Ogre 对象布局依赖游戏版本，路线需要实际校准。
+- 程序使用 DLL 注入与绘图挂接，仅针对 `Poolians.exe`；其他游戏的反作弊兼容性未验证，请勿与带反作弊的游戏同时运行。
+- MinHook 的 BSD 许可证见 [LICENSE.txt](plugin/vendor/minhook/LICENSE.txt)。
+
