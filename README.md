@@ -11,7 +11,7 @@
 ![界面](https://img.shields.io/badge/UI-简体中文-34c9a5?style=flat-square)
 ![分发](https://img.shields.io/badge/package-单文件_EXE-526477?style=flat-square)
 
-[**⬇️ 下载最新版**](https://github.com/AuR3L1US07/PoolAim/releases/latest) · [快速开始](#-快速开始) · [效果预览](#-效果预览) · [源码构建](#-源码构建)
+[**⬇️ 下载最新版**](https://github.com/AuR3L1US07/PoolAim/releases/latest) · [快速开始](#quick-start) · [效果预览](#preview) · [源码构建](#build)
 
 </div>
 
@@ -30,6 +30,8 @@
 
 > **预测范围**：路线未包含完整力度、旋转与摩擦，绿色高亮不代表保证进球。当前版本不包含自动开球或回合判断。
 
+<a id="quick-start"></a>
+
 ## 🚀 快速开始
 
 1. 在 [Releases](https://github.com/AuR3L1US07/PoolAim/releases/latest) 下载 **PoolAim.exe**。
@@ -39,6 +41,8 @@
 **更新／移除**：完全退出游戏后重新打开。仅关闭启动器或隐藏路线不会卸载已加载的 DLL。
 
 下载页同时提供 `SHA256SUMS.txt`，用于核对 EXE 的 SHA-256 校验值。
+
+<a id="preview"></a>
 
 ## 🖼️ 效果预览
 
@@ -72,6 +76,8 @@
 | `F9` / `F10` | 切换参考目标球／袋口 |
 | `F11` | 显示／隐藏参考线 |
 | `+` / `-` | 调整线宽 |
+
+<a id="build"></a>
 
 ## 🛠️ 源码构建
 
