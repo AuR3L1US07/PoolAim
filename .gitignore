@@ -1,0 +1,5 @@
+/plugin/build/
+/plugin/dist/
+/plugin/package/*.o
+/PoolAim.exe
+*.log
