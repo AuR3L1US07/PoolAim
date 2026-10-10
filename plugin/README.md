@@ -26,7 +26,7 @@ powershell -NoProfile -ExecutionPolicy Bypass -File plugin/build.ps1
 powershell -NoProfile -ExecutionPolicy Bypass -File plugin/package/build-single.ps1
 ```
 
-先编译 DLL、加载器并运行测试，再生成 `PoolAim.exe`。工具链准备方式见 [首页构建说明](../README.md#-源码构建)。
+先编译 DLL、加载器并运行测试，再生成 `PoolAim.exe`。工具链准备方式见 [首页构建说明](../README.md#build)。
 
 ## 🔍 运行说明
 
