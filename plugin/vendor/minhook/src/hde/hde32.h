@@ -1,4 +1,4 @@
-﻿/*
+/*
  * Hacker Disassembler Engine 32
  * Copyright (c) 2006-2009, Vyacheslav Patkov.
  * All rights reserved.
@@ -103,3 +103,4 @@ unsigned int hde32_disasm(const void *code, hde32s *hs);
 #endif
 
 #endif /* _HDE32_H_ */
+

@@ -1,4 +1,6 @@
+1 ICON "PoolAim.ico"
 101 RCDATA "../dist/PoolAim.dll"
 102 RCDATA "../dist/LoadPoolAim.exe"
 103 RCDATA "../PoolAim.ini"
 104 RCDATA "../vendor/minhook/LICENSE.txt"
+

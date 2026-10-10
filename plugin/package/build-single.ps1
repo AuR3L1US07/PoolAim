@@ -8,3 +8,4 @@ try {
  & (Join-Path $taskBin 'g++.exe') -std=c++17 -O2 -Wall -Wextra -static -D_WIN32_WINNT=0x0601 -municode -mwindows ../src/launcher.cpp resources.o -o $OutputExe -lgdi32 -luser32 -lshell32
  if($LASTEXITCODE -ne 0){throw 'Launcher build failed'}
 } finally { Pop-Location }
+

@@ -1,4 +1,4 @@
-﻿/*
+/*
  *  MinHook - The Minimalistic API Hooking Library for x64/x86
  *  Copyright (C) 2009-2017 Tsuda Kageyu.
  *  All rights reserved.
@@ -937,3 +937,4 @@ const char *WINAPI MH_StatusToString(MH_STATUS status)
 
     return "(unknown)";
 }
+

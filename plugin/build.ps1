@@ -22,3 +22,4 @@ if($LASTEXITCODE -ne 0){throw 'Geometry test compilation failed.'}
 & (Join-Path $taskBuild 'geometry_test.exe')
 if($LASTEXITCODE -ne 0){throw 'Geometry checks failed.'}
 Get-FileHash -Algorithm SHA256 -LiteralPath (Join-Path $taskDist 'PoolAim.dll'),(Join-Path $taskDist 'LoadPoolAim.exe') | Format-Table
+

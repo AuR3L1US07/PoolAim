@@ -50,5 +50,14 @@ int main(){
  assert(!std::isfinite(collisionTime({0,0,0},{1,0,0},.06)));
  auto grazing=trace({-.4f,.03f,0},{1,0,0},{{{-.4f,.03f,0},0},{{0,.03f,.059999f},1}},0,.55f,1.1f,.03f,0);assert(grazing.hasContact&&grazing.thinContact);
  auto nearMiss=trace({-.4f,.03f,0},{1,0,0},{{{-.4f,.03f,0},0},{{0,.03f,.060001f},1}},0,.55f,1.1f,.03f,0);assert(!nearMiss.hasContact);
+ float ax,ay,bx,by;
+ assert(projectLine({0,0,0},{20,0,0},identity,identity,100,100,ax,ay,bx,by));
+ assert(std::abs(ax-50)<.01&&std::abs(bx-100)<.01);
+ assert(!projectLine({2,0,0},{20,0,0},identity,identity,100,100,ax,ay,bx,by));
+ Matrix perspective{};perspective.m[0]=perspective.m[5]=1;perspective.m[14]=1;
+ assert(projectLine({0,0,-1},{.2f,0,1},identity,perspective,100,100,ax,ay,bx,by));
+ assert(std::isfinite(ax)&&std::isfinite(bx)&&ax<=100.01&&bx<=100.01);
+ assert(!projectLine({0,0,-2},{0,0,-1},identity,perspective,100,100,ax,ay,bx,by));
  std::cout<<"geometry checks passed\n";
 }
+

@@ -50,3 +50,4 @@ int wmain(int argc,wchar_t** argv){
  wprintf(L"PoolAim loaded into Poolians (PID %lu).\nINS: show/hide; F6: banks; F8: labels; F9: target; F10: pocket.\nThe plugin does not alter ball positions, angles or power. Restart the game to remove it.\n",pid);
  return 0;
 }
+

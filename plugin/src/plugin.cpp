@@ -140,7 +140,7 @@ void screenLine(float ax,float ay,float bx,float by,DWORD color,int thickness=1)
  drawVertices(v);
 }
 bool project(Vec p,float& x,float& y){if(!pool::project(p,view,projection,(float)viewport.Width,(float)viewport.Height,x,y))return false;x+=viewport.X;y+=viewport.Y;return true;}
-void worldLine(Vec a,Vec b,DWORD c,int width){float ax,ay,bx,by;if(project(a,ax,ay)&&project(b,bx,by))screenLine(ax,ay,bx,by,c,width);}
+void worldLine(Vec a,Vec b,DWORD c,int width){float ax,ay,bx,by;if(pool::projectLine(a,b,view,projection,(float)viewport.Width,(float)viewport.Height,ax,ay,bx,by))screenLine(ax+viewport.X,ay+viewport.Y,bx+viewport.X,by+viewport.Y,c,width);}
 void ring(Vec p,float r,DWORD c){for(int i=0;i<48;i++){float a=i*6.2831853f/48,b=(i+1)*6.2831853f/48;worldLine(p+Vec{std::cos(a)*r,0,std::sin(a)*r},p+Vec{std::cos(b)*r,0,std::sin(b)*r},c,lineWidth);}}
 // Small bitmap font: no D3DX or font resource lost-device dependencies.
 const char* glyph(char c){
@@ -200,7 +200,7 @@ void renderContent(const std::vector<Ball>& balls){
  else if(prediction=="THIN CUT - SENSITIVE")status=L"极薄碰撞：橙色路线对误差敏感";
  else if(prediction=="CUE SCRATCH RISK")status=L"注意：白球可能落袋";
  else if(prediction.find("POSSIBLE POT BALL ")==0)status=L"几何路线可进："+std::wstring(prediction.begin()+18,prediction.end())+L" 号球（非保证）";
- std::wstring info=L"PoolAim 0.4.6 · 台球瞄准辅助\n球数 "+std::to_wstring(balls.size())+L"   白球 "+std::to_wstring(cueId)+L"   反弹 "+std::to_wstring(banks)+L"\nInsert 显隐    F5 重新识别\nF6 反弹    F7 白球    F8 编号\nF11 参考线    + / - 线宽\n"+status;
+ std::wstring info=L"PoolAim 0.4.7 · 台球瞄准辅助\n球数 "+std::to_wstring(balls.size())+L"   白球 "+std::to_wstring(cueId)+L"   反弹 "+std::to_wstring(banks)+L"\nInsert 显隐    F5 重新识别\nF6 反弹    F7 白球    F8 编号\nF11 参考线    + / - 线宽\n"+status;
  chinesePanel(info);
 }
 HRESULT WINAPI hookEndScene(IDirect3DDevice9* device){
@@ -277,9 +277,9 @@ DWORD WINAPI worker(void*){
   if(module!=previousModule){previousModule=module;ballVtable=findBallVtable(module);log(ballVtable?"CBall RTTI resolved":"waiting for pool game module");rescan=true;}
   // Recovery must not depend on a request from the render callback: loading the
   // DLL in the lobby can yield only AimBall objects before the rack exists.
-  bool recoveryDue=!cueAvailable.load()&&(lastScan==0||GetTickCount()-lastScan>10000);
+  bool recoveryDue=!cueAvailable.load()&&(lastScan==0||GetTickCount()-lastScan>3000);
   bool refreshDue=GetTickCount()-lastScan>60000;
-  if(ballVtable&&(recoveryDue||refreshDue||(rescan.load()&&(lastScan==0||GetTickCount()-lastScan>10000)))){
+  if(ballVtable&&(recoveryDue||refreshDue||(rescan.load()&&(lastScan==0||GetTickCount()-lastScan>1000)))){
    rescan=false;
    auto found=scanBalls(ballVtable);{std::lock_guard<std::mutex> lock(objectsMutex);objects=found;}
    char msg[80];snprintf(msg,sizeof(msg),"scan: %u CBall candidates",(unsigned)found.size());log(msg);lastScan=GetTickCount();
@@ -295,3 +295,4 @@ BOOL WINAPI DllMain(HINSTANCE instance,DWORD reason,LPVOID){
  if(reason==DLL_PROCESS_DETACH)stopping=true;
  return TRUE;
 }
+

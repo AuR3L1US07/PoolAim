@@ -102,6 +102,26 @@ inline std::vector<Segment> essentialLines(const Trace& path,int cue,int maxTurn
  }}return out;
 }
 struct Matrix {float m[16];};
+struct ClipPoint {double x,y,w;};
+inline ClipPoint clipPoint(Vec p,const Matrix& view,const Matrix& projection){
+ double a[4]={p.x,p.y,p.z,1},b[4]={},c[4]={};
+ for(int row=0;row<4;row++)for(int col=0;col<4;col++)b[row]+=view.m[row*4+col]*a[col];
+ for(int row=0;row<4;row++)for(int col=0;col<4;col++)c[row]+=projection.m[row*4+col]*b[col];
+ return {c[0],c[1],c[3]};
+}
+// Clip the segment before dividing by w, so an off-screen endpoint does not
+// discard the visible part of a route, including low camera angles.
+inline bool projectLine(Vec a,Vec b,const Matrix& view,const Matrix& projection,float width,float height,float& ax,float& ay,float& bx,float& by){
+ ClipPoint p=clipPoint(a,view,projection),q=clipPoint(b,view,projection);
+ if(!std::isfinite(p.x)||!std::isfinite(p.y)||!std::isfinite(p.w)||!std::isfinite(q.x)||!std::isfinite(q.y)||!std::isfinite(q.w))return false;
+ double lo=0,hi=1;
+ auto plane=[&](double f,double g){if(f<0&&g<0)return false;if(f<0)lo=std::max(lo,f/(f-g));else if(g<0)hi=std::min(hi,f/(f-g));return lo<=hi;};
+ if(!plane(p.w-.001,q.w-.001)||!plane(p.w+p.x,q.w+q.x)||!plane(p.w-p.x,q.w-q.x)||!plane(p.w+p.y,q.w+q.y)||!plane(p.w-p.y,q.w-q.y))return false;
+ auto at=[&](double t){return ClipPoint{p.x+(q.x-p.x)*t,p.y+(q.y-p.y)*t,p.w+(q.w-p.w)*t};};
+ auto s=at(lo),e=at(hi);
+ ax=(float)((s.x/s.w+1)*width/2);ay=(float)((1-s.y/s.w)*height/2);
+ bx=(float)((e.x/e.w+1)*width/2);by=(float)((1-e.y/e.w)*height/2);return true;
+}
 inline bool project(Vec p,const Matrix& view,const Matrix& projection,float width,float height,float& x,float& y){
  float a[4]={p.x,p.y,p.z,1},b[4]={},c[4]={};
  for(int row=0;row<4;row++)for(int col=0;col<4;col++)b[row]+=view.m[row*4+col]*a[col];
@@ -111,3 +131,4 @@ inline bool project(Vec p,const Matrix& view,const Matrix& projection,float widt
  x=(nx+1)*width/2;y=(1-ny)*height/2;return std::abs(nx)<10&&std::abs(ny)<10;
 }
 }
+

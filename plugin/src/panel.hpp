@@ -32,3 +32,4 @@ void chinesePanel(const std::wstring& message){
   drawing->SetFVF(D3DFVF_XYZRHW|D3DFVF_DIFFUSE|D3DFVF_TEX1);drawing->SetTexture(0,dxTexture);drawing->SetTextureStageState(0,D3DTSS_COLORARG1,D3DTA_TEXTURE);drawing->SetTextureStageState(0,D3DTSS_ALPHAARG1,D3DTA_TEXTURE);drawing->DrawPrimitiveUP(D3DPT_TRIANGLESTRIP,2,v,sizeof(TV));
  }
 }
+

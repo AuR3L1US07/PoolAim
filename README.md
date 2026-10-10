@@ -6,7 +6,7 @@
 
 看清碰撞 · 预览反弹 · 判断薄切
 
-![版本](https://img.shields.io/badge/version-0.4.6-34c9a5?style=flat-square)
+![版本](https://img.shields.io/badge/version-0.4.7-34c9a5?style=flat-square)
 ![平台](https://img.shields.io/badge/platform-Windows_x86-0078D4?style=flat-square)
 ![界面](https://img.shields.io/badge/UI-简体中文-34c9a5?style=flat-square)
 ![分发](https://img.shields.io/badge/package-单文件_EXE-526477?style=flat-square)
@@ -16,6 +16,13 @@
 </div>
 
 ---
+
+## 🆕 v0.4.7 更新
+
+- 新增多尺寸台球图标，应用于 EXE 和启动窗口。
+- 路线端点位于画面外时，保留画面内的可见部分。
+- 缩短白球重新生成后的识别等待，并加快 F5 手动重新识别的响应。
+- 新增视口与相机平面裁剪测试；实际偶发缺线仍需场景验证。
 
 ## ✨ 功能一览
 

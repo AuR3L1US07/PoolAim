@@ -27,7 +27,7 @@ LRESULT CALLBACK proc(HWND w,UINT msg,WPARAM wp,LPARAM lp){
  case WM_APP:EnableWindow(button,TRUE);status=wp==0?L"加载器已完成。请回到游戏查看辅助面板。":L"加载失败：确认只打开一个游戏，并进入练习模式。";InvalidateRect(w,nullptr,FALSE);return 0;
  case WM_DRAWITEM:{auto d=(DRAWITEMSTRUCT*)lp;HBRUSH brush=CreateSolidBrush(IsWindowEnabled(button)?RGB(60,205,174):RGB(55,75,82));FillRect(d->hDC,&d->rcItem,brush);DeleteObject(brush);SetBkMode(d->hDC,TRANSPARENT);SetTextColor(d->hDC,RGB(8,27,32));SelectObject(d->hDC,bodyFont);DrawTextW(d->hDC,L"加载辅助",-1,&d->rcItem,DT_CENTER|DT_VCENTER|DT_SINGLELINE);return TRUE;}
  case WM_PAINT:{PAINTSTRUCT ps;HDC dc=BeginPaint(w,&ps);RECT r;GetClientRect(w,&r);HBRUSH bg=CreateSolidBrush(RGB(16,24,34));FillRect(dc,&r,bg);DeleteObject(bg);SetBkMode(dc,TRANSPARENT);
- label(dc,32,28,L"PoolAim",RGB(236,244,247),titleFont);label(dc,200,40,L"0.4.6  ·  台球瞄准辅助",RGB(86,218,188),bodyFont);
+ label(dc,32,28,L"PoolAim",RGB(236,244,247),titleFont);label(dc,200,40,L"0.4.7  ·  台球瞄准辅助",RGB(86,218,188),bodyFont);
  label(dc,32,86,status.c_str(),RGB(206,219,229),bodyFont);
  label(dc,32,134,L"青线  白球走位     黄线  目标球路线",RGB(155,177,195),bodyFont);
  label(dc,32,168,L"绿光  几何路线可进，实际结果仍受力度和旋转影响",RGB(116,232,171),bodyFont);
@@ -38,6 +38,7 @@ LRESULT CALLBACK proc(HWND w,UINT msg,WPARAM wp,LPARAM lp){
 int WINAPI wWinMain(HINSTANCE instance,HINSTANCE,LPWSTR,int show){
  int count;auto args=CommandLineToArgvW(GetCommandLineW(),&count);if(count==3&&std::wstring(args[1])==L"--extract-only"){bool ok=extract(args[2]);LocalFree(args);return ok?0:1;}LocalFree(args);
  SetProcessDPIAware();titleFont=CreateFontW(-32,0,0,0,FW_SEMIBOLD,0,0,0,DEFAULT_CHARSET,0,0,CLEARTYPE_QUALITY,0,L"Segoe UI");bodyFont=CreateFontW(-16,0,0,0,FW_NORMAL,0,0,0,DEFAULT_CHARSET,0,0,CLEARTYPE_QUALITY,0,L"Microsoft YaHei UI");
- WNDCLASSW wc{};wc.lpfnWndProc=proc;wc.hInstance=instance;wc.lpszClassName=L"PoolAimLauncher";wc.hCursor=LoadCursor(nullptr,IDC_ARROW);RegisterClassW(&wc);
+ WNDCLASSW wc{};wc.lpfnWndProc=proc;wc.hInstance=instance;wc.lpszClassName=L"PoolAimLauncher";wc.hIcon=LoadIconW(instance,MAKEINTRESOURCEW(1));wc.hCursor=LoadCursor(nullptr,IDC_ARROW);RegisterClassW(&wc);
  mainWindow=CreateWindowW(wc.lpszClassName,L"PoolAim · 瞄准辅助",WS_OVERLAPPED|WS_CAPTION|WS_SYSMENU|WS_MINIMIZEBOX,CW_USEDEFAULT,CW_USEDEFAULT,560,386,nullptr,nullptr,instance,nullptr);if(!mainWindow)return 1;ShowWindow(mainWindow,show);MSG msg;while(GetMessageW(&msg,nullptr,0,0)>0){TranslateMessage(&msg);DispatchMessageW(&msg);}DeleteObject(titleFont);DeleteObject(bodyFont);return 0;
 }
+
